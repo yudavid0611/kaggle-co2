@@ -28,6 +28,8 @@ def delete_outliers(df, columns, limits):
         deleted_indices.update(list(indices))
     
     df_deleted = df.drop(deleted_indices)
+    df_deleted.reset_index(drop=True, inplace=True)
+    
     return df_deleted, deleted_indices
 
 
