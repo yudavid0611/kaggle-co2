@@ -4,7 +4,10 @@ from xgboost import XGBRegressor
 from sklearn.model_selection import cross_val_score
 
 
-def score_dataset(X, y, numertic_only=True):
+def score_dataset(df, target, numertic_only=True):
+    X = df.drop(target, axis=1)
+    y = df[target]
+
     model = XGBRegressor(
         max_depth=5,
         n_estimators=100,

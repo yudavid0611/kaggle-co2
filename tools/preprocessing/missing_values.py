@@ -26,27 +26,32 @@ def delete_columns(df, threshold, target=None):
 
     df = df.drop(over_threshold_columns, axis=1)
 
-    return df
+    return df, over_threshold_columns
 
 
 # 결측값 대체(numeric)
-def impute(df, method=None, value=0):
-    basic_methods = ['bfill', 'ffill', 'mean', 'median', 'value']
+def impute_missing_values(df, method, value=0):
+    basic_methods = ['fill', 'mean', 'median', 'value']
     
     df_numeric = df.select_dtypes(exclude=['O'])
     df_object = df.select_dtypes(include=['O'])
 
+    tool = None
     if method in basic_methods:
         if method == 'mean':
             mean = df_numeric.mean()
             df_numeric.fillna(mean, inplace=True)
+            tool = mean
         elif method == 'median':
             median = df_numeric.median()
             df_numeric.fillna(median, inplace=True)
+            tool = median
         elif method == 'value':
             df_numeric.fillna(value, inplace=True)
+            tool = value
         else:
-            df_numeric.fillna(method=method, inplace=True)
+            df_numeric.fillna(method='ffill', inplace=True)
+            df_numeric.fillna(method='bfill', inplace=True)
     
     # 선형 보간
     elif method == 'linear':
@@ -59,4 +64,4 @@ def impute(df, method=None, value=0):
     final_df = pd.concat([df_numeric, df_object], axis=1)
     final_df = final_df[df_columns]
 
-    return final_df
+    return final_df, tool
