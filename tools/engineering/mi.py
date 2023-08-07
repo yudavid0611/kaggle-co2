@@ -9,15 +9,17 @@ def make_mi_scores(X, y, discrete_features):
     return mi_scores
 
 
-def mi_score(df, target, threshold, corr=False, corr_threshold=None):
-    df_columns = list(df.columns)
+def mi_score(df, target, threshold, corr=False, corr_threshold=None, protected=None):
+    if not protected:
+        protected = []
+        
     df_mi = df.copy()
     
     X = df_mi.drop(target, axis=1)
     y = df_mi.pop(target)
     
     X_numeric = X.select_dtypes(exclude=['O'])
-    object_columns = list(X.select_dtypes(include=['O']).index)
+    object_columns = list(X.select_dtypes(include=['O']).columns)
     
     discrete_features = X_numeric.dtypes == int
 
@@ -35,8 +37,7 @@ def mi_score(df, target, threshold, corr=False, corr_threshold=None):
         corr = abs(df_corr[target])
         corr_selected_columns = list(corr[corr >= corr_threshold].index)
 
-    selected_columns_all = list(set(mi_selected_columns + corr_selected_columns)) + object_columns
-
+    selected_columns_all = list(set(mi_selected_columns + corr_selected_columns + protected)) + object_columns
     df_selected = df.loc[:, selected_columns_all]
 
     return df_selected, selected_columns_all
