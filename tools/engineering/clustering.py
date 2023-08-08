@@ -15,7 +15,7 @@ def kmc(df_origin, features, cluster=None, elbow=False, n_clusters=10, encoding=
     if not cluster and elbow:
         print('The elbow method is excecuting')
         distortion = [0, math.inf]
-        for i in range(2, n_clusters):
+        for i in range(2, n_clusters + 1):
             cluster = KMeans(n_clusters=i, n_init=10, random_state=0)
             cluster.fit(X_scaled)
             if cluster.inertia_ > distortion[1]:

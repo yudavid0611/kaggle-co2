@@ -11,6 +11,7 @@ def one_hot(df, target, encoder=None):
     
     df_encoded = pd.DataFrame(encoder.transform(df[[target]]))
     df_encoded.index = df.index
+    df_encoded.columns = encoder.get_feature_names_out()
     df = df.drop(target, axis=1)
 
     df = pd.concat([df, df_encoded], axis=1)

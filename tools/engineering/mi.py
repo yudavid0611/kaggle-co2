@@ -40,4 +40,4 @@ def mi_score(df, target, threshold, corr=False, corr_threshold=None, protected=N
     selected_columns_all = list(set(mi_selected_columns + corr_selected_columns + protected)) + object_columns
     df_selected = df.loc[:, selected_columns_all]
 
-    return df_selected, selected_columns_all
+    return df_selected, selected_columns_all, mi_scores
