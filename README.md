@@ -1,5 +1,6 @@
 # [Kaggle Competition] Predict CO2 Emissions in Rwanda
 ## 소개
+- [Competition Link](https://www.kaggle.com/competitions/playground-series-s3e20)
 - **기간**: 23.08.02 - 23.08.12
 - **팀 구성**: 1인
 - **목적**: Kaggle Learn에서 배운 내용을 활용하여 작업하기
